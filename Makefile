@@ -1,10 +1,14 @@
+include docker/docker.mk
 
+base-up:
+	docker network create --driver bridge development
+base-down:
+	docker network rm development
 
-down:
-	docker compose down
+dev-up:
+	docker compose -f dev/docker-compose.yaml up -d --build
+dev-down:
+	docker compose -f dev/docker-compose.yaml down
 
-up: down
-	docker compose up -d
-
-upx: down
-	docker compose up --build -d
+up: base-up services-up tools-up dev-up
+down: dev-down tools-down services-down base-down

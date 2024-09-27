@@ -1,0 +1,26 @@
+name: 'tools'
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "9090:80"
+    networks:
+      - development
+
+  pganalyser:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "9091:8080"
+    depends_on:
+      - pgadmin
+    networks:
+      - development
+
+networks:
+  development:
+    external: true  # Indicate that this network is external

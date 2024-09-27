@@ -1,0 +1,21 @@
+name: 'dev'
+
+services:
+  dev:
+    container_name: 'dev'
+    restart: 'unless-stopped'
+    volumes:
+      - type: bind
+        source: shared
+        target: /home/ubuntu/app
+    build:
+      dockerfile: Dockerfile
+    user: ubuntu:ubuntu
+    tty: true
+    networks:
+      - development
+    attach: false
+
+networks:
+  development:
+    external: true  # Indicate that this network is external
